@@ -211,3 +211,13 @@ SELECT 'jugadores',              COUNT(*)               FROM dbo.jugadores
 UNION ALL
 SELECT 'partidas',               COUNT(*)               FROM dbo.partidas;
 GO
+ALTER LOGIN sa ENABLE;
+ALTER LOGIN sa WITH PASSWORD = 'Admin123!';
+GO
+
+-- Habilitar modo mixto (por si acaso)
+EXEC xp_instance_regwrite 
+    N'HKEY_LOCAL_MACHINE', 
+    N'Software\Microsoft\MSSQLServer\MSSQLServer',
+    N'LoginMode', REG_DWORD, 2;
+GO
