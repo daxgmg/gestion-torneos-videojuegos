@@ -37,7 +37,7 @@ public class PartidaDAO {
             ps.setInt(2, partida.getEquipo1().getId());
             ps.setInt(3, partida.getEquipo2().getId());
             ps.setString(4, partida.getResultado());
-            ps.setString(5, partida.getFecha());
+            ps.setDate(5, java.sql.Date.valueOf(partida.getFecha()));
 
             int filas = ps.executeUpdate();
             if (filas > 0) {
@@ -145,7 +145,7 @@ public class PartidaDAO {
             ps.setInt(2, partida.getEquipo1().getId());
             ps.setInt(3, partida.getEquipo2().getId());
             ps.setString(4, partida.getResultado());
-            ps.setString(5, partida.getFecha());
+            ps.setDate(5, java.sql.Date.valueOf(partida.getFecha()));
             ps.setInt(6, partida.getId());
             return ps.executeUpdate() > 0;
 

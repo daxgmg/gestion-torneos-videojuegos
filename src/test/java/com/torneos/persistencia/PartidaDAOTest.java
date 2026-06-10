@@ -45,7 +45,7 @@ class PartidaDAOTest {
         partida.setEquipo1(EQUIPO1_REF);
         partida.setEquipo2(EQUIPO2_REF);
         partida.setResultado(null);           // pendiente
-        partida.setFecha("2026-06-20 15:00");
+        partida.setFecha("2026-07-15");
 
         boolean resultado = dao.insertar(partida);
 
@@ -105,7 +105,7 @@ class PartidaDAOTest {
         partida.setEquipo1(EQUIPO1_REF);
         partida.setEquipo2(EQUIPO2_REF);
         partida.setResultado("Team Alpha 3 - 1 Team Omega");
-        partida.setFecha("2026-06-20 17:30");
+        partida.setFecha("2026-07-15");
 
         boolean resultado = dao.actualizar(partida);
 

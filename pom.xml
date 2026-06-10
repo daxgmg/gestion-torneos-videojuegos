@@ -45,6 +45,14 @@
             <version>${mssql.jdbc.version}</version>
         </dependency>
 
+        <!-- DLL nativa requerida para integratedSecurity=true en Windows x64 -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc_auth</artifactId>
+            <version>12.4.2.x64</version>
+            <type>dll</type>
+        </dependency>
+
         <!-- JUnit 5 – API de pruebas -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

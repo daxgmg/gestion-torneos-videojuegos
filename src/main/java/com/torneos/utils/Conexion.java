@@ -7,13 +7,16 @@ import java.sql.SQLException;
 /**
  * Clase utilitaria para gestionar la conexión JDBC a SQL Server.
  *
- * <p>Implementa el patrón <b>Singleton</b> para reutilizar la misma
- * instancia de {@link Connection} durante toda la sesión.</p>
+ * <p>
+ * Implementa el patrón <b>Singleton</b> para reutilizar la misma
+ * instancia de {@link Connection} durante toda la sesión.
+ * </p>
  *
- * <p><strong>Nota de seguridad:</strong> Las credenciales están
- * definidas como constantes para facilitar el desarrollo local.
- * En producción, deben leerse de variables de entorno o un
- * archivo de configuración externo no versionado.</p>
+ * <p>
+ * Usa <strong>Windows Authentication</strong> (Integrated Security).
+ * No requiere usuario ni contraseña explícitos; la identidad del
+ * proceso actual de Windows se usa para autenticarse en SQL Server.
+ * </p>
  */
 public class Conexion {
 
@@ -22,13 +25,13 @@ public class Conexion {
     // -------------------------------------------------------------------------
 
     private static final String URL =
-            "jdbc:sqlserver://localhost:1433;" +
+            "jdbc:sqlserver://localhost\\SQLEXPRESS08;" +
             "databaseName=torneos_db;" +
             "encrypt=true;" +
             "trustServerCertificate=true";
 
     private static final String USUARIO  = "sa";
-    private static final String PASSWORD = "";   // completar antes de usar
+    private static final String PASSWORD = "Admin123!";
 
     // -------------------------------------------------------------------------
     // Singleton
@@ -37,7 +40,8 @@ public class Conexion {
     private static Connection instancia;
 
     /** Constructor privado: impide instanciación externa. */
-    private Conexion() {}
+    private Conexion() {
+    }
 
     /**
      * Devuelve la conexión activa. Si no existe o está cerrada,
