@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===================================================== -->
+    <!-- Coordenadas del proyecto                              -->
+    <!-- ===================================================== -->
+    <groupId>com.torneos</groupId>
+    <artifactId>gestion-torneos-videojuegos</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>gestion-torneos-videojuegos</name>
+    <description>Sistema de gestión de torneos de videojuegos</description>
+
+    <!-- ===================================================== -->
+    <!-- Propiedades globales                                  -->
+    <!-- ===================================================== -->
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Versiones de dependencias -->
+        <mssql.jdbc.version>12.4.2.jre11</mssql.jdbc.version>
+        <junit.jupiter.version>5.10.0</junit.jupiter.version>
+        <maven.surefire.version>3.1.2</maven.surefire.version>
+    </properties>
+
+    <!-- ===================================================== -->
+    <!-- Dependencias                                          -->
+    <!-- ===================================================== -->
+    <dependencies>
+
+        <!-- Driver JDBC para SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>${mssql.jdbc.version}</version>
+        </dependency>
+
+        <!-- JUnit 5 – API de pruebas -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <!-- ===================================================== -->
+    <!-- Build                                                 -->
+    <!-- ===================================================== -->
+    <build>
+        <plugins>
+
+            <!-- Compilador Java 11 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire: necesario para que Maven ejecute JUnit 5 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
