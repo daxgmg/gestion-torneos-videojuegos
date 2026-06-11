@@ -1,20 +1,25 @@
-import vistas.LoginFrame;
-
+import com.torneos.vistas.LoginFrame;
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        // Set native OS look and feel for a modern premium aesthetic
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.err.println("No se pudo establecer el Look and Feel del sistema: " + e.getMessage());
-        }
+        // Forzar colores en todos los botones de Windows
+        UIManager.put("Button.background", new Color(235, 245, 255));
+        UIManager.put("Button.foreground", Color.BLACK);
+        UIManager.put("Button.font", new Font("Arial", Font.BOLD, 13));
+        UIManager.put("Button.opaque", Boolean.TRUE);
+        UIManager.put("TextField.background", Color.WHITE);
+        UIManager.put("TextField.foreground", Color.BLACK);
+        UIManager.put("TextField.caretForeground", Color.BLACK);
+        UIManager.put("PasswordField.background", Color.WHITE);
+        UIManager.put("PasswordField.foreground", Color.BLACK);
+        UIManager.put("PasswordField.caretForeground", Color.BLACK);
+        UIManager.put("Panel.background", Color.WHITE);
+        UIManager.put("OptionPane.background", Color.WHITE);
+        UIManager.put("Table.background", Color.WHITE);
+        UIManager.put("Table.foreground", Color.BLACK);
 
-        // Run application
-        SwingUtilities.invokeLater(() -> {
-            LoginFrame login = new LoginFrame();
-            login.setVisible(true);
-        });
+        SwingUtilities.invokeLater(LoginFrame::new);
     }
 }
