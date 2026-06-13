@@ -180,7 +180,7 @@ public class UserDAO {
      * @return el {@link User} autenticado con su {@link Rol}, o {@code null}
      *         si las credenciales son incorrectas.
      */
-    public User autenticar(String email, String password) {
+    public User autenticar(String email, String password) throws SQLException {
         String sql =
             "SELECT u.id, u.nombre, u.email, u.password, " +
             "       r.id AS rol_id, r.nombre AS rol_nombre " +
@@ -197,8 +197,6 @@ public class UserDAO {
                     return mapear(rs);
                 }
             }
-        } catch (SQLException e) {
-            System.err.println("[UserDAO.autenticar] Error: " + e.getMessage());
         }
         return null;
     }

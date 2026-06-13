@@ -40,7 +40,7 @@ public class MenuAdminFrame extends JFrame {
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
         // Botones
-        JPanel botonesPanel = new JPanel(new GridLayout(2, 2, 20, 20));
+        JPanel botonesPanel = new JPanel(new GridLayout(3, 2, 20, 20));
         botonesPanel.setBackground(Color.WHITE);
         botonesPanel.setBorder(new EmptyBorder(30, 10, 30, 10));
 
@@ -48,6 +48,7 @@ public class MenuAdminFrame extends JFrame {
         botonesPanel.add(crearBoton("⚔️  Gestionar Equipos", e -> new EquipoFrame(usuarioActual)));
         botonesPanel.add(crearBoton("🎮  Gestionar Jugadores", e -> new JugadorFrame(usuarioActual)));
         botonesPanel.add(crearBoton("👤  Gestionar Usuarios", e -> new UserFrame(usuarioActual)));
+        botonesPanel.add(crearBoton("⚽  Gestionar Partidas", e -> new PartidaFrame(usuarioActual)));
 
         mainPanel.add(botonesPanel, BorderLayout.CENTER);
 

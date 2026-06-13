@@ -1,32 +1,46 @@
 package com.torneos.vistas;
 
+import com.torneos.dominio.Equipo;
+import com.torneos.dominio.Jugador;
 import com.torneos.dominio.User;
+import com.torneos.persistencia.EquipoDAO;
+import com.torneos.persistencia.JugadorDAO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
- * Panel de Jugador rediseñado con temática de Brawl Stars.
- * Utiliza una barra de navegación con botones tipo Token/Medalla y un contenedor de recompensas metálico.
+ * Vista para que el jugador logueado gestione su perfil de jugador y se una a un equipo.
+ * Rediseñada con estética Brawl Stars (botones chunky, contenedor metálico, inputs con iconos).
  */
-public class MenuJugadorFrame extends JFrame {
+public class PerfilJugadorFrame extends JFrame {
 
     private User usuarioActual;
+    private JugadorDAO jugadorDAO = new JugadorDAO();
+    private EquipoDAO equipoDAO = new EquipoDAO();
 
-    public MenuJugadorFrame(User user) {
+    private JTextField txtNombre;
+    private JTextField txtAlias;
+    private JComboBox<ComboItem> cmbEquipo;
+    private JButton btnGuardar;
+    private Jugador jugadorExistente;
+
+    public PerfilJugadorFrame(User user) {
         this.usuarioActual = user;
         initComponents();
+        loadEquipos();
+        loadPerfil();
     }
 
     private void initComponents() {
-        setTitle("Panel de Jugador - Gestión de Torneos");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(850, 600);
+        setTitle("Mi Perfil - Gestión de Torneos");
+        setSize(600, 500);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        // Fondo de Pantalla Principal (Brawl Stars Background o Fallback Gradiente)
+        // Fondo de Pantalla Principal (Brawl Stars o Gradiente de Fallback)
         JPanel bgPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -50,7 +64,7 @@ public class MenuJugadorFrame extends JFrame {
                     g2.drawImage(img, x, y, newW, newH, this);
                     g2.dispose();
                 } else {
-                    // Fallback Gradiente Brawl
+                    // Fallback Gradiente Brawl Stars
                     Graphics2D g2 = (Graphics2D) g.create();
                     g2.setPaint(new GradientPaint(0, 0, new Color(14, 116, 144), 0, getHeight(), new Color(8, 47, 73)));
                     g2.fillRect(0, 0, getWidth(), getHeight());
@@ -61,39 +75,16 @@ public class MenuJugadorFrame extends JFrame {
         bgPanel.setLayout(null);
         setContentPane(bgPanel);
 
-        // Menú de Navegación Horizontal Superior (Semi-transparente)
-        JPanel menuBarPanel = new JPanel(new BorderLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                // Fondo azul oscuro semi-transparente
-                g2.setColor(new Color(15, 23, 42, 190));
-                g2.fillRect(0, 0, getWidth(), getHeight());
-                g2.dispose();
-            }
-        };
-        menuBarPanel.setOpaque(false);
-        menuBarPanel.setBounds(0, 0, 850, 80);
-        bgPanel.add(menuBarPanel);
+        // Botón de regresar chunky azul/cian
+        JButton btnVolver = new BrawlChunkyCyanButton("<");
+        btnVolver.setBounds(20, 15, 55, 42);
+        btnVolver.addActionListener(e -> dispose());
+        bgPanel.add(btnVolver);
 
-        // Contenedor de Botones en Fila
-        JPanel buttonsRowPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 18));
-        buttonsRowPanel.setOpaque(false);
-        menuBarPanel.add(buttonsRowPanel, BorderLayout.WEST);
-
-        // Agregar botones estilizados estilo Brawl Token
-        buttonsRowPanel.add(crearBrawlBoton("🏆", "Ver Torneos", e -> new TorneosJugadorFrame(usuarioActual)));
-        buttonsRowPanel.add(crearBrawlBoton("⚔️", "Ver mis Partidas", e -> new MisPartidasFrame(usuarioActual)));
-        buttonsRowPanel.add(crearBrawlBoton("⭐", "Ver Clasificación", e -> new ClasificacionFrame()));
-        buttonsRowPanel.add(crearBrawlBoton("👤", "Mi Perfil", e -> new PerfilJugadorFrame(usuarioActual)));
-
-        // Texto de Bienvenida (Esquina superior derecha)
-        JLabel lblBienvenido = new JLabel("Bienvenido, " + usuarioActual.getNombre());
-        lblBienvenido.setFont(new Font("Arial Black", Font.BOLD, 14));
-        lblBienvenido.setForeground(new Color(254, 240, 138)); // Amarillo brillante
-        lblBienvenido.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
-        menuBarPanel.add(lblBienvenido, BorderLayout.EAST);
+        // Título "MI PERFIL" estilizado Brawl
+        CustomBrawlTitleLabel lblTitulo = new CustomBrawlTitleLabel("MI PERFIL", 26);
+        lblTitulo.setBounds(90, 15, 420, 42);
+        bgPanel.add(lblTitulo);
 
         // Contenedor Central 'Estilo Brawl' (Contenedor de Recompensas)
         JPanel brawlCentralPanel = new JPanel() {
@@ -151,62 +142,147 @@ public class MenuJugadorFrame extends JFrame {
         };
         brawlCentralPanel.setLayout(null);
         brawlCentralPanel.setOpaque(false);
-        brawlCentralPanel.setBounds(50, 110, 750, 360);
+        brawlCentralPanel.setBounds(40, 75, 520, 360);
         bgPanel.add(brawlCentralPanel);
 
-        // Encabezado "PANEL DE JUGADOR"
-        CustomBrawlTitleLabel lblTitulo = new CustomBrawlTitleLabel("PANEL DE JUGADOR");
-        lblTitulo.setBounds(150, 30, 450, 60);
-        brawlCentralPanel.add(lblTitulo);
+        // Nombre
+        JLabel lblNombre = new JLabel("Nombre Completo:");
+        lblNombre.setFont(new Font("Arial Black", Font.BOLD, 12));
+        lblNombre.setForeground(new Color(254, 240, 138)); // Amarillo brillante
+        lblNombre.setBounds(60, 25, 400, 20);
+        brawlCentralPanel.add(lblNombre);
 
-        // Ilustración de brawler/icono (Stickers)
-        JLabel labelSticker = new JLabel("⚡ 💎 ⭐ ⚡");
-        labelSticker.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 24));
-        labelSticker.setBounds(280, 110, 200, 30);
-        labelSticker.setForeground(new Color(163, 230, 53));
-        brawlCentralPanel.add(labelSticker);
+        txtNombre = new BrawlTextField("👊");
+        txtNombre.setBounds(60, 48, 400, 38);
+        brawlCentralPanel.add(txtNombre);
 
-        // Subtítulo temático en el centro
-        JLabel lblDesafio = new JLabel("¡CONSIGUE LA MÁXIMA PUNTUACIÓN Y RECLAMA TU RECOMPENSA!", SwingConstants.CENTER);
-        lblDesafio.setFont(new Font("Arial Black", Font.BOLD, 12));
-        lblDesafio.setForeground(new Color(14, 165, 233)); // Azul cian
-        lblDesafio.setBounds(50, 170, 650, 25);
-        brawlCentralPanel.add(lblDesafio);
+        // Alias
+        JLabel lblAlias = new JLabel("Alias / Gamertag:");
+        lblAlias.setFont(new Font("Arial Black", Font.BOLD, 12));
+        lblAlias.setForeground(new Color(254, 240, 138));
+        lblAlias.setBounds(60, 100, 400, 20);
+        brawlCentralPanel.add(lblAlias);
 
-        JLabel lblDesafioShadow = new JLabel("¡CONSIGUE LA MÁXIMA PUNTUACIÓN Y RECLAMA TU RECOMPENSA!", SwingConstants.CENTER);
-        lblDesafioShadow.setFont(new Font("Arial Black", Font.BOLD, 12));
-        lblDesafioShadow.setForeground(Color.BLACK);
-        lblDesafioShadow.setBounds(51, 171, 650, 25);
-        brawlCentralPanel.add(lblDesafioShadow);
+        txtAlias = new BrawlTextField("👤");
+        txtAlias.setBounds(60, 123, 400, 38);
+        brawlCentralPanel.add(txtAlias);
 
-        // Botón Cerrar Sesión (Estética Brawl Red Chunky)
-        JButton btnCerrar = new BrawlChunkyRedButton("Cerrar Sesión");
-        btnCerrar.setBounds(620, 495, 180, 44); // Alto chunky
-        btnCerrar.addActionListener(e -> {
-            dispose();
-            new LoginFrame();
+        // Equipo
+        JLabel lblEquipo = new JLabel("Selecciona tu Equipo:");
+        lblEquipo.setFont(new Font("Arial Black", Font.BOLD, 12));
+        lblEquipo.setForeground(new Color(254, 240, 138));
+        lblEquipo.setBounds(60, 175, 400, 20);
+        brawlCentralPanel.add(lblEquipo);
+
+        cmbEquipo = new JComboBox<>();
+        cmbEquipo.setFont(new Font("Arial Black", Font.BOLD, 14));
+        cmbEquipo.setBounds(60, 198, 400, 38);
+        cmbEquipo.setBackground(new Color(20, 5, 40));
+        cmbEquipo.setForeground(Color.WHITE);
+        cmbEquipo.setBorder(BorderFactory.createLineBorder(new Color(14, 116, 144), 2));
+        cmbEquipo.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel lbl = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                lbl.setBackground(isSelected ? new Color(14, 116, 144) : new Color(20, 5, 40));
+                lbl.setForeground(Color.WHITE);
+                lbl.setFont(new Font("Arial Black", Font.BOLD, 13));
+                lbl.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
+                return lbl;
+            }
         });
-        bgPanel.add(btnCerrar);
+        brawlCentralPanel.add(cmbEquipo);
 
-        // Emojis y Stickers flotando en el fondo
+        // Guardar (Botón Amarillo Chunky)
+        btnGuardar = new BrawlChunkyYellowButton("💾 Guardar Perfil");
+        btnGuardar.setBounds(60, 275, 400, 46);
+        btnGuardar.addActionListener(e -> guardarPerfil());
+        brawlCentralPanel.add(btnGuardar);
+
+        // Decoraciones extras
         JLabel decGema = new JLabel("💎");
-        decGema.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
-        decGema.setBounds(30, 490, 50, 50);
+        decGema.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 24));
+        decGema.setBounds(15, 435, 40, 40);
         bgPanel.add(decGema);
 
         JLabel decPower = new JLabel("⚡");
-        decPower.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
-        decPower.setBounds(90, 490, 50, 50);
-        decPower.setForeground(new Color(163, 230, 53));
+        decPower.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 24));
+        decPower.setBounds(545, 435, 40, 40);
         bgPanel.add(decPower);
 
         setVisible(true);
     }
 
-    private JButton crearBrawlBoton(String icon, String texto, ActionListener listener) {
-        JButton btn = new BrawlTokenButton(icon, texto);
-        btn.addActionListener(listener);
-        return btn;
+    private void loadEquipos() {
+        cmbEquipo.removeAllItems();
+        List<Equipo> equipos = equipoDAO.obtenerTodos();
+        for (Equipo eq : equipos) {
+            cmbEquipo.addItem(new ComboItem(eq.getId(), eq.getNombre()));
+        }
+    }
+
+    private void loadPerfil() {
+        List<Jugador> jugadores = jugadorDAO.obtenerTodos();
+        for (Jugador j : jugadores) {
+            if (j.getUser() != null && j.getUser().getId() == usuarioActual.getId()) {
+                jugadorExistente = j;
+                break;
+            }
+        }
+
+        if (jugadorExistente != null) {
+            txtNombre.setText(jugadorExistente.getNombre());
+            txtAlias.setText(jugadorExistente.getAlias());
+
+            if (jugadorExistente.getEquipo() != null) {
+                for (int i = 0; i < cmbEquipo.getItemCount(); i++) {
+                    if (cmbEquipo.getItemAt(i).id == jugadorExistente.getEquipo().getId()) {
+                        cmbEquipo.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void guardarPerfil() {
+        String nombre = txtNombre.getText().trim();
+        String alias = txtAlias.getText().trim();
+        ComboItem equipoItem = (ComboItem) cmbEquipo.getSelectedItem();
+
+        if (nombre.isEmpty() || alias.isEmpty() || equipoItem == null) {
+            JOptionPane.showMessageDialog(this, "Por favor completa todos los campos y selecciona un equipo.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Equipo eq = new Equipo();
+        eq.setId(equipoItem.id);
+        eq.setNombre(equipoItem.name);
+
+        boolean ok;
+        if (jugadorExistente == null) {
+            Jugador j = new Jugador();
+            j.setNombre(nombre);
+            j.setAlias(alias);
+            j.setEquipo(eq);
+            j.setUser(usuarioActual);
+            ok = jugadorDAO.insertar(j);
+            if (ok) {
+                jugadorExistente = j;
+            }
+        } else {
+            jugadorExistente.setNombre(nombre);
+            jugadorExistente.setAlias(alias);
+            jugadorExistente.setEquipo(eq);
+            ok = jugadorDAO.actualizar(jugadorExistente);
+        }
+
+        if (ok) {
+            JOptionPane.showMessageDialog(this, "Perfil y equipo guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al guardar el perfil.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private Image obtenerBrawlBg() {
@@ -227,12 +303,15 @@ public class MenuJugadorFrame extends JFrame {
     }
 
     // =========================================================================
-    // CLASES AUXILIARES DE DISEÑO ESTILIZADO (BRAWL STARS)
+    // CLASES AUXILIARES DE DISEÑO
     // =========================================================================
 
     private static class CustomBrawlTitleLabel extends JLabel {
-        public CustomBrawlTitleLabel(String text) {
+        private int fontSize;
+
+        public CustomBrawlTitleLabel(String text, int fontSize) {
             super(text, SwingConstants.CENTER);
+            this.fontSize = fontSize;
         }
 
         @Override
@@ -241,7 +320,7 @@ public class MenuJugadorFrame extends JFrame {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-            Font font = new Font("Arial Black", Font.BOLD, 32);
+            Font font = new Font("Arial Black", Font.BOLD, fontSize);
             g2.setFont(font);
 
             String text = getText();
@@ -254,7 +333,7 @@ public class MenuJugadorFrame extends JFrame {
 
             // Borde grueso negro
             g2.setColor(Color.BLACK);
-            g2.setStroke(new BasicStroke(8, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(6, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.draw(tl.getOutline(null));
 
             // Degradado de color amarillo a naranja brillante
@@ -266,17 +345,15 @@ public class MenuJugadorFrame extends JFrame {
         }
     }
 
-    private static class BrawlTokenButton extends JButton {
+    private static class BrawlChunkyCyanButton extends JButton {
         private boolean hover = false;
-        private String iconText;
 
-        public BrawlTokenButton(String iconText, String text) {
+        public BrawlChunkyCyanButton(String text) {
             super(text);
-            this.iconText = iconText;
             setContentAreaFilled(false);
             setFocusPainted(false);
             setBorderPainted(false);
-            setFont(new Font("Arial Black", Font.BOLD, 12));
+            setFont(new Font("Arial Black", Font.BOLD, 18));
             setForeground(Color.WHITE);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -320,32 +397,32 @@ public class MenuJugadorFrame extends JFrame {
             g2.setColor(Color.WHITE);
             g2.drawRoundRect(0, 0, w - 1, h - 5, arc, arc);
 
-            // Dibujar icono y texto
+            // Texto
             g2.setFont(getFont());
             FontMetrics fm = g2.getFontMetrics();
-            String fullText = iconText + " " + getText();
-            int tx = (w - fm.stringWidth(fullText)) / 2;
+            String text = getText();
+            int tx = (w - fm.stringWidth(text)) / 2;
             int ty = (h - fm.getHeight()) / 2 + fm.getAscent() - 2;
 
             g2.setColor(Color.BLACK);
-            g2.drawString(fullText, tx + 1, ty + 1);
+            g2.drawString(text, tx + 1, ty + 1);
 
             g2.setColor(Color.WHITE);
-            g2.drawString(fullText, tx, ty);
+            g2.drawString(text, tx, ty);
 
             g2.dispose();
         }
     }
 
-    private static class BrawlChunkyRedButton extends JButton {
+    private static class BrawlChunkyYellowButton extends JButton {
         private boolean hover = false;
 
-        public BrawlChunkyRedButton(String text) {
+        public BrawlChunkyYellowButton(String text) {
             super(text);
             setContentAreaFilled(false);
             setFocusPainted(false);
             setBorderPainted(false);
-            setFont(new Font("Arial Black", Font.BOLD, 13));
+            setFont(new Font("Arial Black", Font.BOLD, 14));
             setForeground(Color.WHITE);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -372,15 +449,15 @@ public class MenuJugadorFrame extends JFrame {
             int h = getHeight();
             int arc = 15;
 
-            // Sombra del botón
-            g2.setColor(new Color(100, 20, 20));
+            // Sombra
+            g2.setColor(new Color(180, 83, 9));
             g2.fillRoundRect(0, 4, w, h - 4, arc, arc);
 
-            // Gradiente rojo
+            // Gradiente amarillo
             if (hover) {
-                g2.setPaint(new GradientPaint(0, 0, new Color(239, 68, 68), 0, h, new Color(185, 28, 28)));
+                g2.setPaint(new GradientPaint(0, 0, new Color(254, 240, 138), 0, h, new Color(234, 88, 12)));
             } else {
-                g2.setPaint(new GradientPaint(0, 0, new Color(185, 28, 28), 0, h, new Color(153, 27, 27)));
+                g2.setPaint(new GradientPaint(0, 0, new Color(253, 224, 71), 0, h, new Color(217, 119, 6)));
             }
             g2.fillRoundRect(0, 0, w, h - 4, arc, arc);
 
@@ -405,4 +482,59 @@ public class MenuJugadorFrame extends JFrame {
             g2.dispose();
         }
     }
+
+    private static class BrawlTextField extends JTextField {
+        private String emoji;
+
+        public BrawlTextField(String emoji) {
+            this.emoji = emoji;
+            setOpaque(false);
+            setFont(new Font("Arial Black", Font.BOLD, 14));
+            setForeground(Color.WHITE);
+            setCaretColor(Color.WHITE);
+            setBorder(BorderFactory.createEmptyBorder(5, 45, 5, 10));
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int w = getWidth();
+            int h = getHeight();
+            int arc = 15;
+
+            // Fondo barra
+            g2.setColor(new Color(20, 5, 40));
+            g2.fillRoundRect(0, 0, w, h, arc, arc);
+
+            // Borde
+            g2.setStroke(new BasicStroke(2.5f));
+            g2.setColor(new Color(14, 116, 144));
+            g2.drawRoundRect(1, 1, w - 2, h - 2, arc, arc);
+
+            // Emoji
+            g2.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+            g2.drawString(emoji, 12, h / 2 + 7);
+
+            g2.dispose();
+            super.paintComponent(g);
+        }
+    }
+
+    private static class ComboItem {
+        int id;
+        String name;
+
+        ComboItem(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 }
+

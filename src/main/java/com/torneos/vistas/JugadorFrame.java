@@ -38,10 +38,29 @@ public class JugadorFrame extends JFrame {
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
+        // Título con botón de regresar
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        headerPanel.setBackground(Color.WHITE);
+
+        JButton btnVolver = new JButton("<");
+        btnVolver.setFont(new Font("Arial", Font.BOLD, 20));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setBackground(new Color(70, 130, 180));
+        btnVolver.setOpaque(true);
+        btnVolver.setContentAreaFilled(true);
+        btnVolver.setFocusPainted(false);
+        btnVolver.setBorderPainted(false);
+        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnVolver.setPreferredSize(new Dimension(50, 38));
+        btnVolver.addActionListener(e -> dispose());
+        headerPanel.add(btnVolver);
+
         JLabel lblTitulo = new JLabel("Gestión de Jugadores");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
         lblTitulo.setForeground(new Color(50, 50, 50));
-        mainPanel.add(lblTitulo, BorderLayout.NORTH);
+        headerPanel.add(lblTitulo);
+
+        mainPanel.add(headerPanel, BorderLayout.NORTH);
 
         String[] columnas = { "ID", "Nombre", "Alias", "Equipo" };
         modeloTabla = new DefaultTableModel(columnas, 0) {

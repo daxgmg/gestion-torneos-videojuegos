@@ -1,28 +1,38 @@
 package com.torneos.vistas;
 
+import com.torneos.dominio.Rol;
 import com.torneos.dominio.User;
+import com.torneos.persistencia.RolDAO;
 import com.torneos.persistencia.UserDAO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
+import java.util.List;
 
-public class LoginFrame extends JFrame {
+/**
+ * Vista rediseñada con el tema Brawl Stars para que los nuevos jugadores puedan registrar su propia cuenta.
+ */
+public class RegistrarUsuarioFrame extends JFrame {
 
-    private JTextField txtEmail;
+    private JFrame parent;
+    private JTextField txtNombre;
+    private JTextField txtUsername;
     private JPasswordField txtPassword;
-    private JButton btnLogin;
-    private JButton btnRegistrar;
 
-    public LoginFrame() {
+    public RegistrarUsuarioFrame(JFrame parent) {
+        this.parent = parent;
+        if (parent != null) {
+            parent.setVisible(false);
+        }
         initComponents();
     }
-
     private void initComponents() {
-        setTitle("Acceso al Sistema - Gestión de Torneos");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Registrar Cuenta - Gestión de Torneos");
         setSize(750, 560);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE);
+        setLayout(null);
         setResizable(false);
 
         // Fondo Dinámico de Madera de Roble Oscuro
@@ -68,38 +78,38 @@ public class LoginFrame extends JFrame {
         bgPanel.setLayout(null);
         setContentPane(bgPanel);
 
-        // Encabezado del Torneo (Fuera del panel central)
-        // Icono Ancla Izquierda
-        JLabel lblTrophyLeft = new JLabel("⚓");
-        lblTrophyLeft.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
-        lblTrophyLeft.setBounds(100, 15, 50, 50);
-        lblTrophyLeft.setForeground(new Color(251, 191, 36));
-        bgPanel.add(lblTrophyLeft);
+        // Encabezado del Registro
+        // Icono Escudo Izquierdo
+        JLabel lblShieldLeft = new JLabel("🛡️");
+        lblShieldLeft.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        lblShieldLeft.setBounds(120, 15, 50, 50);
+        lblShieldLeft.setForeground(new Color(251, 191, 36));
+        bgPanel.add(lblShieldLeft);
 
-        // Título Estilo One Piece
-        CustomAnimeTitleLabel lblTitulo = new CustomAnimeTitleLabel("GESTIÓN DE TORNEOS");
-        lblTitulo.setBounds(150, 15, 450, 50);
+        // Título "Crear Cuenta"
+        CustomAnimeTitleLabel lblTitulo = new CustomAnimeTitleLabel("CREAR CUENTA");
+        lblTitulo.setBounds(170, 15, 410, 50);
         bgPanel.add(lblTitulo);
 
-        // Icono Espadas Cruzadas Derecha
-        JLabel lblControllerRight = new JLabel("⚔️");
-        lblControllerRight.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
-        lblControllerRight.setBounds(610, 15, 50, 50);
-        lblControllerRight.setForeground(new Color(251, 191, 36));
-        bgPanel.add(lblControllerRight);
+        // Icono Escudo Derecho
+        JLabel lblShieldRight = new JLabel("🛡️");
+        lblShieldRight.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 32));
+        lblShieldRight.setBounds(590, 15, 50, 50);
+        lblShieldRight.setForeground(new Color(251, 191, 36));
+        bgPanel.add(lblShieldRight);
 
-        // Elementos decorativos flotantes
+        // Elementos decorativos
         JLabel dec1 = new JLabel("🏴‍☠️");
         dec1.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
         dec1.setBounds(60, 140, 50, 50);
         bgPanel.add(dec1);
 
-        JLabel dec2 = new JLabel("🧭");
+        JLabel dec2 = new JLabel("⚓");
         dec2.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 36));
         dec2.setBounds(50, 360, 50, 50);
         bgPanel.add(dec2);
 
-        JLabel dec3 = new JLabel("☸️");
+        JLabel dec3 = new JLabel("🧭");
         dec3.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 30));
         dec3.setBounds(640, 160, 50, 50);
         bgPanel.add(dec3);
@@ -110,7 +120,7 @@ public class LoginFrame extends JFrame {
         bgPanel.add(dec4);
 
         // Panel Central 'Pergamino'
-        JPanel loginPanel = new JPanel() {
+        JPanel registerPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -161,93 +171,138 @@ public class LoginFrame extends JFrame {
                 g2.drawOval(x, y, 12, 12);
             }
         };
-        loginPanel.setLayout(null);
-        loginPanel.setOpaque(false);
-        loginPanel.setBounds(150, 80, 450, 420);
-        bgPanel.add(loginPanel);
+        registerPanel.setLayout(null);
+        registerPanel.setOpaque(false);
+        registerPanel.setBounds(150, 80, 450, 420);
+        bgPanel.add(registerPanel);
 
-        // Subtítulo "INICIAR SESIÓN"
-        CustomAnimeSubLabel lblSub = new CustomAnimeSubLabel("INICIAR SESIÓN");
-        lblSub.setBounds(30, 25, 390, 40);
-        loginPanel.add(lblSub);
+        // Subtítulo "REGISTRARSE"
+        CustomAnimeSubLabel lblSub = new CustomAnimeSubLabel("REGISTRARSE");
+        lblSub.setBounds(30, 20, 390, 40);
+        registerPanel.add(lblSub);
 
-        // Separador estilo pirata
-        JSeparator sep = new JSeparator();
-        sep.setBounds(40, 75, 370, 2);
-        sep.setForeground(new Color(180, 140, 90));
-        loginPanel.add(sep);
+        // Nombre Completo
+        JLabel lblNombre = new JLabel("NOMBRE COMPLETO:");
+        lblNombre.setFont(new Font("Arial Black", Font.BOLD, 12));
+        lblNombre.setForeground(new Color(60, 35, 20));
+        lblNombre.setBounds(40, 70, 370, 20);
+        registerPanel.add(lblNombre);
 
-        // Correo Electrónico
-        JLabel lblEmail = new JLabel("CORREO ELECTRÓNICO:");
-        lblEmail.setFont(new Font("Arial Black", Font.BOLD, 12));
-        lblEmail.setForeground(new Color(60, 35, 20)); // Marrón pergamino
-        lblEmail.setBounds(40, 95, 370, 20);
-        loginPanel.add(lblEmail);
+        txtNombre = new ParchmentTextField("👊", new Color(139, 92, 26));
+        txtNombre.setBounds(40, 90, 370, 38);
+        registerPanel.add(txtNombre);
 
-        txtEmail = new ParchmentTextField("✉️", new Color(139, 92, 26));
-        txtEmail.setBounds(40, 120, 370, 38);
-        loginPanel.add(txtEmail);
+        // Usuario
+        JLabel lblUsername = new JLabel("USUARIO:");
+        lblUsername.setFont(new Font("Arial Black", Font.BOLD, 12));
+        lblUsername.setForeground(new Color(60, 35, 20));
+        lblUsername.setBounds(40, 135, 370, 20);
+        registerPanel.add(lblUsername);
+
+        txtUsername = new ParchmentTextField("⭐", new Color(139, 92, 26));
+        txtUsername.setBounds(40, 155, 370, 38);
+        registerPanel.add(txtUsername);
+
+        // Subtítulo de dominio del usuario
+        JLabel lblDomainHint = new JLabel("Se creará como usuario@torneos.com");
+        lblDomainHint.setFont(new Font("Arial Black", Font.BOLD, 11));
+        lblDomainHint.setForeground(new Color(139, 92, 26));
+        lblDomainHint.setBounds(45, 195, 360, 15);
+        registerPanel.add(lblDomainHint);
 
         // Contraseña
         JLabel lblPassword = new JLabel("CONTRASEÑA:");
         lblPassword.setFont(new Font("Arial Black", Font.BOLD, 12));
         lblPassword.setForeground(new Color(60, 35, 20));
-        lblPassword.setBounds(40, 175, 370, 20);
-        loginPanel.add(lblPassword);
+        lblPassword.setBounds(40, 215, 370, 20);
+        registerPanel.add(lblPassword);
 
         txtPassword = new ParchmentPasswordField("🔑", new Color(139, 92, 26));
-        txtPassword.setBounds(40, 200, 370, 38);
-        loginPanel.add(txtPassword);
+        txtPassword.setBounds(40, 235, 370, 38);
+        registerPanel.add(txtPassword);
 
-        // Botón Iniciar Sesión (Naranja)
-        btnLogin = new AnimeOrangeButton("Iniciar Sesión");
-        btnLogin.setBounds(40, 265, 370, 46);
-        btnLogin.addActionListener(e -> login());
-        txtPassword.addActionListener(e -> login());
-        loginPanel.add(btnLogin);
+        // Botón Registrar (Naranja)
+        JButton btnRegistrar = new AnimeOrangeButton("REGISTRAR");
+        btnRegistrar.setBounds(40, 295, 180, 44);
+        btnRegistrar.addActionListener(e -> registrar());
+        registerPanel.add(btnRegistrar);
 
-        // Botón Crear Cuenta
-        btnRegistrar = new AnimeLinkButton("Crear Cuenta");
-        btnRegistrar.setBounds(40, 325, 370, 42);
-        btnRegistrar.addActionListener(e -> new RegistrarUsuarioFrame(this));
-        loginPanel.add(btnRegistrar);
+        // Botón Cancelar (Rojo)
+        JButton btnCancelar = new PirateCancelButton("CANCELAR");
+        btnCancelar.setBounds(230, 295, 180, 44);
+        btnCancelar.addActionListener(e -> cerrar());
+        registerPanel.add(btnCancelar);
+
+        // Manejar evento de cierre de ventana
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                cerrar();
+            }
+        });
 
         setVisible(true);
     }
 
-    private void login() {
-        String email = txtEmail.getText().trim();
+    private void registrar() {
+        String nombre = txtNombre.getText().trim();
+        String username = txtUsername.getText().trim();
         String password = new String(txtPassword.getPassword()).trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Por favor ingresa tu correo y contraseña",
-                    "Faltan Datos", JOptionPane.WARNING_MESSAGE);
+        if (nombre.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor completa todos los campos.", "Atención", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        try {
-            UserDAO dao = new UserDAO();
-            User user = dao.autenticar(email, password);
+        if (username.contains(" ") || username.contains("@")) {
+            JOptionPane.showMessageDialog(this, "El usuario no debe contener espacios ni el símbolo '@'.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            if (user == null) {
-                JOptionPane.showMessageDialog(this,
-                        "¡Usuario no encontrado o contraseña incorrecta!",
-                        "Error de Acceso", JOptionPane.ERROR_MESSAGE);
+        String email = username.toLowerCase() + "@torneos.com";
+
+        UserDAO userDAO = new UserDAO();
+        List<User> todos = userDAO.obtenerTodos();
+        for (User u : todos) {
+            if (u.getEmail().equalsIgnoreCase(email)) {
+                JOptionPane.showMessageDialog(this, "¡Este pirata ya está registrado!", "Atención", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+        }
 
-            dispose();
-            if ("ADMIN".equals(user.getRol().getNombre())) {
-                new MenuAdminFrame(user);
-            } else {
-                new MenuJugadorFrame(user);
+        RolDAO rolDAO = new RolDAO();
+        Rol rolJugador = null;
+        for (Rol r : rolDAO.obtenerTodos()) {
+            if ("JUGADOR".equalsIgnoreCase(r.getNombre())) {
+                rolJugador = r;
+                break;
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al conectar con el servidor:\n" + ex.getMessage(),
-                    "Error de Red", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+        }
+
+        if (rolJugador == null) {
+            JOptionPane.showMessageDialog(this, "Error de configuración: No se encontró el rol de JUGADOR.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        User nuevoUsuario = new User();
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setEmail(email);
+        nuevoUsuario.setPassword(password);
+        nuevoUsuario.setRol(rolJugador);
+
+        boolean exito = userDAO.insertar(nuevoUsuario);
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "¡Cuenta de pirata registrada correctamente!\nTu correo es: " + email, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            cerrar();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cerrar() {
+        dispose();
+        if (parent != null) {
+            parent.setVisible(true);
         }
     }
 
@@ -473,16 +528,16 @@ public class LoginFrame extends JFrame {
         }
     }
 
-    private static class AnimeLinkButton extends JButton {
+    private static class PirateCancelButton extends JButton {
         private boolean hover = false;
 
-        public AnimeLinkButton(String text) {
+        public PirateCancelButton(String text) {
             super(text);
             setContentAreaFilled(false);
             setFocusPainted(false);
             setBorderPainted(false);
             setFont(new Font("Arial Black", Font.BOLD, 15));
-            setForeground(new Color(139, 92, 26)); // Marrón oscuro
+            setForeground(Color.WHITE);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
 
             addMouseListener(new java.awt.event.MouseAdapter() {
@@ -507,25 +562,38 @@ public class LoginFrame extends JFrame {
             int w = getWidth();
             int h = getHeight();
 
+            // Sombra
+            g2.setColor(new Color(100, 20, 20));
+            g2.fillRoundRect(0, 4, w, h - 4, 15, 15);
+
+            // Cuerpo rojo carmesí
             if (hover) {
-                g2.setColor(new Color(217, 119, 6, 40));
-                g2.fillRoundRect(2, 2, w - 5, h - 5, 12, 12);
-                setForeground(new Color(217, 119, 6)); // Dorado al hover
+                g2.setPaint(new GradientPaint(0, 0, new Color(239, 68, 68), 0, h, new Color(185, 28, 28)));
             } else {
-                setForeground(new Color(120, 53, 4)); // Marrón oscuro
+                g2.setPaint(new GradientPaint(0, 0, new Color(185, 28, 28), 0, h, new Color(153, 27, 27)));
             }
+            g2.fillRoundRect(0, 0, w, h - 4, 15, 15);
 
-            g2.setStroke(new BasicStroke(2));
-            g2.setColor(getForeground());
-            g2.drawRoundRect(2, 2, w - 5, h - 5, 12, 12);
+            // Línea de brillo
+            g2.setColor(new Color(255, 255, 255, 100));
+            g2.fillRoundRect(3, 3, w - 6, 4, 6, 6);
 
-            // Texto
+            // Borde blanco
+            g2.setStroke(new BasicStroke(3));
+            g2.setColor(Color.WHITE);
+            g2.drawRoundRect(0, 0, w - 1, h - 5, 15, 15);
+
+            // Texto con sombra
             g2.setFont(getFont());
             FontMetrics fm = g2.getFontMetrics();
             String text = getText();
             int tx = (w - fm.stringWidth(text)) / 2;
-            int ty = (h - fm.getHeight()) / 2 + fm.getAscent() - 1;
+            int ty = (h - fm.getHeight()) / 2 + fm.getAscent() - 2;
 
+            g2.setColor(Color.BLACK);
+            g2.drawString(text, tx + 2, ty + 2);
+
+            g2.setColor(Color.WHITE);
             g2.drawString(text, tx, ty);
 
             g2.dispose();

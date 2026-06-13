@@ -1,1 +1,8 @@
+com\torneos\persistencia\RolDAOTest.class
+com\torneos\persistencia\PartidaDAOTest.class
 com\torneos\persistencia\package-info.class
+com\torneos\persistencia\UserDAOTest.class
+com\torneos\persistencia\TorneoDAOTest.class
+com\torneos\persistencia\EquipoDAOTest.class
+com\torneos\persistencia\InscripcionDAOTest.class
+com\torneos\persistencia\JugadorDAOTest.class

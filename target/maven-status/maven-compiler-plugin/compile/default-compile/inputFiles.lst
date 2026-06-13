@@ -1,26 +1,34 @@
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\TorneoFrame.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\JugadorFrame.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\package-info.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\EquipoFrame.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\MenuJugadorFrame.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\utils\package-info.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\Main.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\package-info.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\JugadorDAO.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\UserFrame.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\utils\Conexion.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\PartidaDAO.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\MenuAdminFrame.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\TorneoDAO.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\UserDAO.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Partida.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\LoginFrame.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Inscripcion.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Rol.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Equipo.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\EquipoDAO.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Jugador.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\User.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Torneo.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\RolDAO.java
-C:\Users\Windows 11\Desktop\Proyecto_Torneo\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\InscripcionDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\package-info.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\utils\package-info.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\PartidaDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\UserFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Rol.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\UserDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Torneo.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Equipo.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\PartidaFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\User.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\LoginFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\package-info.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Inscripcion.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\TorneoDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\MenuJugadorFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\RegistrarUsuarioFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\Main.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Jugador.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\ClasificacionFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\TorneosJugadorFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\JugadorFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\PartidasTorneoFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\JugadorDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\MenuAdminFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\utils\Conexion.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\EquipoFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\InscripcionDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\EquipoDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\dominio\Partida.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\persistencia\RolDAO.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\TorneoFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\InicioFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\MisPartidasFrame.java
+C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\src\main\java\com\torneos\vistas\PerfilJugadorFrame.java

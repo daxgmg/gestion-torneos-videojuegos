@@ -1,0 +1,9 @@
+5d2bed1 feat: agregar vistas Swing con login, menus y CRUD completo Co-authored-by: Gerardo <gerardobatres06@gmail.com>
+3f247a4 feat: agregar vistas Swing con login y menus de admin y jugador Co-authored-by: Gerardo <gerardobatres06@gmail.com>
+5668cb0 feat: corregir conexion SQL Server y formato de fecha en PartidaDAO Co-authored-by: Gerardo <gerardobatres06@gmail.com>
+727f6e8 feat: agregar pruebas JUnit para todos los DAOs Co-authored-by: Gerardo <gerardobatres06@gmail.com>
+677fc8b feat: agregar clases DAO con CRUD completo Co-authored-by: Gerardo <gerardobatres06@gmail.com>
+88cb03b feat: agregar clases dominio y clase Conexion utils
+f878db8 feat: configurar proyecto Maven con dependencias SQL Server y JUnit
+8610fa1 feat: agregar script SQL de base de datos
+cba6ac5 Initial commit

@@ -137,7 +137,7 @@ class UserDAOTest {
     @Test
     @Order(6)
     @DisplayName("6 - autenticar: debe retornar el admin con credenciales correctas")
-    void testAutenticar() {
+    void testAutenticar() throws Exception {
         // Usa el usuario admin del script de datos de prueba
         User user = dao.autenticar("admin@torneos.com", "admin123");
 
@@ -151,7 +151,7 @@ class UserDAOTest {
     @Test
     @Order(7)
     @DisplayName("7 - autenticar: debe retornar null con credenciales incorrectas")
-    void testAutenticarFallido() {
+    void testAutenticarFallido() throws Exception {
         User user = dao.autenticar("noexiste@torneos.com", "wrongpass");
 
         assertNull(user, "autenticar() debe retornar null con credenciales inválidas");

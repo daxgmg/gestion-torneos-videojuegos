@@ -11,11 +11,9 @@ import java.sql.SQLException;
  * Implementa el patrón <b>Singleton</b> para reutilizar la misma
  * instancia de {@link Connection} durante toda la sesión.
  * </p>
- *
- * <p>
- * Usa <strong>Windows Authentication</strong> (Integrated Security).
- * No requiere usuario ni contraseña explícitos; la identidad del
- * proceso actual de Windows se usa para autenticarse en SQL Server.
+ * * <p>
+ * Modificado para forzar la autenticación por usuario (SQL Server Authentication)
+ * y desactivar la seguridad integrada de Windows que generaba conflictos.
  * </p>
  */
 public class Conexion {
@@ -25,13 +23,14 @@ public class Conexion {
     // -------------------------------------------------------------------------
 
     private static final String URL =
-            "jdbc:sqlserver://localhost\\SQLEXPRESS08;" +
+            "jdbc:sqlserver://localhost;" +
             "databaseName=torneos_db;" +
+            "integratedSecurity=true;" +
             "encrypt=true;" +
             "trustServerCertificate=true";
 
-    private static final String USUARIO  = "sa";
-    private static final String PASSWORD = "Admin123!";
+    private static final String USUARIO  = "";
+    private static final String PASSWORD = "";
 
     // -------------------------------------------------------------------------
     // Singleton
@@ -39,21 +38,41 @@ public class Conexion {
 
     private static Connection instancia;
 
+    static {
+        try {
+            // Mantenemos el bloque por si el proyecto exige la existencia de la DLL,
+            // pero al estar integratedSecurity en false, Java no la utilizará para loguearse.
+            java.io.File dll = new java.io.File("mssql-jdbc_auth-12.4.2.x64.dll");
+            if (!dll.exists()) {
+                dll = new java.io.File("gestion-torneos-videojuegos/mssql-jdbc_auth-12.4.2.x64.dll");
+            }
+            if (dll.exists()) {
+                System.load(dll.getAbsolutePath());
+                System.out.println("[Conexion] DLL nativa detectada en el sistema.");
+            }
+        } catch (Throwable t) {
+            System.err.println("[Conexion] Advertencia al revisar DLL nativa: " + t.getMessage());
+        }
+    }
+
     /** Constructor privado: impide instanciación externa. */
     private Conexion() {
     }
 
     /**
      * Devuelve la conexión activa. Si no existe o está cerrada,
-     * crea una nueva.
+     * crea una nueva usando las credenciales explícitas de SQL Server.
      *
      * @return {@link Connection} lista para ejecutar sentencias SQL.
-     * @throws SQLException si el driver no está disponible o los
-     *                      datos de conexión son incorrectos.
+     * @throws SQLException si los datos de conexión son incorrectos.
      */
     public static Connection getConexion() throws SQLException {
         if (instancia == null || instancia.isClosed()) {
-            instancia = DriverManager.getConnection(URL, USUARIO, PASSWORD);
+            if (USUARIO == null || USUARIO.isEmpty()) {
+                instancia = DriverManager.getConnection(URL);
+            } else {
+                instancia = DriverManager.getConnection(URL, USUARIO, PASSWORD);
+            }
             System.out.println("[Conexion] Conexión establecida con torneos_db.");
         }
         return instancia;

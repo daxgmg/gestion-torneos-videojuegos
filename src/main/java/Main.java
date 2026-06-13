@@ -1,4 +1,4 @@
-import com.torneos.vistas.LoginFrame;
+import com.torneos.vistas.InicioFrame;
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,6 +20,6 @@ public class Main {
         UIManager.put("Table.background", Color.WHITE);
         UIManager.put("Table.foreground", Color.BLACK);
 
-        SwingUtilities.invokeLater(LoginFrame::new);
+        SwingUtilities.invokeLater(InicioFrame::new);
     }
 }
