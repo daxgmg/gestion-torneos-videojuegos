@@ -11,6 +11,7 @@ public class Torneo {
     private String fechaInicio;
     private String fechaFin;
     private String estado;
+    private String recompensa;
 
     // -------------------------------------------------------------------------
     // Constructores
@@ -24,6 +25,15 @@ public class Torneo {
         this.fechaInicio = fechaInicio;
         this.fechaFin    = fechaFin;
         this.estado      = estado;
+    }
+
+    public Torneo(int id, String nombre, String fechaInicio, String fechaFin, String estado, String recompensa) {
+        this.id          = id;
+        this.nombre      = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin    = fechaFin;
+        this.estado      = estado;
+        this.recompensa  = recompensa;
     }
 
     // -------------------------------------------------------------------------
@@ -70,6 +80,14 @@ public class Torneo {
         this.estado = estado;
     }
 
+    public String getRecompensa() {
+        return recompensa;
+    }
+
+    public void setRecompensa(String recompensa) {
+        this.recompensa = recompensa;
+    }
+
     // -------------------------------------------------------------------------
     // toString
     // -------------------------------------------------------------------------
@@ -82,6 +100,7 @@ public class Torneo {
                 ", fechaInicio='" + fechaInicio + '\'' +
                 ", fechaFin='" + fechaFin + '\'' +
                 ", estado='" + estado + '\'' +
+                ", recompensa='" + recompensa + '\'' +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.torneos.persistencia.EquipoDAOTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.201 s -- in com.torneos.persistencia.EquipoDAOTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.138 s -- in com.torneos.persistencia.EquipoDAOTest

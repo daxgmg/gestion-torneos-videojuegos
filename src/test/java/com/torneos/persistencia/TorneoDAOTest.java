@@ -35,6 +35,7 @@ class TorneoDAOTest {
         torneo.setFechaInicio("2026-07-01");
         torneo.setFechaFin("2026-07-31");
         torneo.setEstado("ACTIVO");
+        torneo.setRecompensa("฿ 50,000,000");
 
         boolean resultado = dao.insertar(torneo);
 
@@ -75,6 +76,7 @@ class TorneoDAOTest {
         assertEquals(idGenerado, torneo.getId(), "El id debe coincidir");
         assertEquals("Torneo JUnit Test", torneo.getNombre(), "El nombre debe coincidir");
         assertEquals("ACTIVO", torneo.getEstado(), "El estado debe ser ACTIVO");
+        assertEquals("฿ 50,000,000", torneo.getRecompensa(), "La recompensa debe coincidir");
 
         System.out.println("[TorneoDAOTest] Torneo encontrado: " + torneo);
     }
@@ -93,6 +95,7 @@ class TorneoDAOTest {
         torneo.setFechaInicio("2026-07-01");
         torneo.setFechaFin("2026-08-15");
         torneo.setEstado("FINALIZADO");
+        torneo.setRecompensa("฿ 100,000,000");
 
         boolean resultado = dao.actualizar(torneo);
 
@@ -104,6 +107,8 @@ class TorneoDAOTest {
                 "El estado debe haberse actualizado a FINALIZADO");
         assertEquals("Torneo JUnit Test Actualizado", torneoActualizado.getNombre(),
                 "El nombre debe haberse actualizado");
+        assertEquals("฿ 100,000,000", torneoActualizado.getRecompensa(),
+                "La recompensa debe haberse actualizado");
 
         System.out.println("[TorneoDAOTest] Torneo actualizado: " + torneoActualizado);
     }

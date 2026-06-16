@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.torneos.persistencia.UserDAOTest" time="0.786" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.torneos.persistencia.UserDAOTest" time="0.486" tests="7" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="ES"/>
     <property name="sun.boot.library.path" value="C:\Program Files\BellSoft\LibericaJDK-25-Full\bin"/>
-    <property name="sun.java.command" value="C:\Users\Admin\AppData\Local\Temp\surefire2436427860931947800\surefirebooter-20260612182557649_3.jar C:\Users\Admin\AppData\Local\Temp\surefire2436427860931947800 2026-06-12T18-25-57_318-jvmRun1 surefire-20260612182557649_1tmp surefire_0-20260612182557649_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Admin\AppData\Local\Temp\surefire1388276194911264681\surefirebooter-20260615205508973_3.jar C:\Users\Admin\AppData\Local\Temp\surefire1388276194911264681 2026-06-15T20-55-08_819-jvmRun1 surefire-20260615205508973_1tmp surefire_0-20260615205508973_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\target\test-classes;C:\Users\Admin\Desktop\Proyectojava\gestion-torneos-videojuegos\target\classes;C:\Users\Admin\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\12.4.2.jre11\mssql-jdbc-12.4.2.jre11.jar;C:\Users\Admin\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.0\junit-jupiter-5.10.0.jar;C:\Users\Admin\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Admin\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Admin\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Admin\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Admin\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.0\junit-jupiter-params-5.10.0.jar;C:\Users\Admin\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Admin\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Admin\AppData\Local\Temp\surefire2436427860931947800\surefirebooter-20260612182557649_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Admin\AppData\Local\Temp\surefire1388276194911264681\surefirebooter-20260615205508973_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.3+11-LTS"/>
@@ -59,39 +59,39 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="testInsertar" classname="com.torneos.persistencia.UserDAOTest" time="0.15">
+  <testcase name="testInsertar" classname="com.torneos.persistencia.UserDAOTest" time="0.026">
     <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
-[UserDAOTest] Usuario insertado con id: 16
+[UserDAOTest] Usuario insertado con id: 21
 ]]></system-out>
   </testcase>
-  <testcase name="testObtenerTodos" classname="com.torneos.persistencia.UserDAOTest" time="0.049">
+  <testcase name="testObtenerTodos" classname="com.torneos.persistencia.UserDAOTest" time="0.024">
     <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
 [UserDAOTest] Total usuarios encontrados: 5
 ]]></system-out>
   </testcase>
-  <testcase name="testBuscarPorId" classname="com.torneos.persistencia.UserDAOTest" time="0.046">
+  <testcase name="testBuscarPorId" classname="com.torneos.persistencia.UserDAOTest" time="0.062">
     <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
-[UserDAOTest] Usuario encontrado: User{id=16, nombre='Test Usuario', email='test@torneos.com', rol=Rol{id=1, nombre='ADMIN'}}
+[UserDAOTest] Usuario encontrado: User{id=21, nombre='Test Usuario', email='test@torneos.com', rol=Rol{id=1, nombre='ADMIN'}}
 ]]></system-out>
   </testcase>
-  <testcase name="testActualizar" classname="com.torneos.persistencia.UserDAOTest" time="0.237">
-    <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
-[Conexion] Conexión establecida con torneos_db.
-[UserDAOTest] Usuario actualizado: User{id=16, nombre='Test Actualizado', email='actualizado@torneos.com', rol=Rol{id=1, nombre='ADMIN'}}
-]]></system-out>
-  </testcase>
-  <testcase name="testEliminar" classname="com.torneos.persistencia.UserDAOTest" time="0.148">
+  <testcase name="testActualizar" classname="com.torneos.persistencia.UserDAOTest" time="0.092">
     <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
 [Conexion] Conexión establecida con torneos_db.
-[UserDAOTest] Usuario con id 16 eliminado correctamente.
+[UserDAOTest] Usuario actualizado: User{id=21, nombre='Test Actualizado', email='actualizado@torneos.com', rol=Rol{id=1, nombre='ADMIN'}}
 ]]></system-out>
   </testcase>
-  <testcase name="testAutenticar" classname="com.torneos.persistencia.UserDAOTest" time="0.111">
+  <testcase name="testEliminar" classname="com.torneos.persistencia.UserDAOTest" time="0.171">
+    <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
+[Conexion] Conexión establecida con torneos_db.
+[UserDAOTest] Usuario con id 21 eliminado correctamente.
+]]></system-out>
+  </testcase>
+  <testcase name="testAutenticar" classname="com.torneos.persistencia.UserDAOTest" time="0.025">
     <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
 [UserDAOTest] Usuario autenticado: User{id=1, nombre='Administrador', email='admin@torneos.com', rol=Rol{id=1, nombre='ADMIN'}}
 ]]></system-out>
   </testcase>
-  <testcase name="testAutenticarFallido" classname="com.torneos.persistencia.UserDAOTest" time="0.034">
+  <testcase name="testAutenticarFallido" classname="com.torneos.persistencia.UserDAOTest" time="0.079">
     <system-out><![CDATA[[Conexion] Conexión establecida con torneos_db.
 [UserDAOTest] Autenticación fallida retornó null correctamente.
 ]]></system-out>

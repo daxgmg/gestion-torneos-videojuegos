@@ -25,8 +25,8 @@ public class TorneoDAO {
      */
     public boolean insertar(Torneo torneo) {
         String sql =
-            "INSERT INTO dbo.torneos (nombre, fecha_inicio, fecha_fin, estado) " +
-            "VALUES (?, ?, ?, ?)";
+            "INSERT INTO dbo.torneos (nombre, fecha_inicio, fecha_fin, estado, recompensa) " +
+            "VALUES (?, ?, ?, ?, ?)";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -34,6 +34,7 @@ public class TorneoDAO {
             ps.setString(2, torneo.getFechaInicio());
             ps.setString(3, torneo.getFechaFin());
             ps.setString(4, torneo.getEstado());
+            ps.setString(5, torneo.getRecompensa());
 
             int filas = ps.executeUpdate();
             if (filas > 0) {
@@ -61,7 +62,7 @@ public class TorneoDAO {
      */
     public List<Torneo> obtenerTodos() {
         List<Torneo> lista = new ArrayList<>();
-        String sql = "SELECT id, nombre, fecha_inicio, fecha_fin, estado FROM dbo.torneos";
+        String sql = "SELECT id, nombre, fecha_inicio, fecha_fin, estado, recompensa FROM dbo.torneos";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -87,7 +88,7 @@ public class TorneoDAO {
      */
     public Torneo buscarPorId(int id) {
         String sql =
-            "SELECT id, nombre, fecha_inicio, fecha_fin, estado " +
+            "SELECT id, nombre, fecha_inicio, fecha_fin, estado, recompensa " +
             "FROM dbo.torneos WHERE id = ?";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -117,7 +118,7 @@ public class TorneoDAO {
     public boolean actualizar(Torneo torneo) {
         String sql =
             "UPDATE dbo.torneos " +
-            "SET nombre = ?, fecha_inicio = ?, fecha_fin = ?, estado = ? " +
+            "SET nombre = ?, fecha_inicio = ?, fecha_fin = ?, estado = ?, recompensa = ? " +
             "WHERE id = ?";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -126,7 +127,8 @@ public class TorneoDAO {
             ps.setString(2, torneo.getFechaInicio());
             ps.setString(3, torneo.getFechaFin());
             ps.setString(4, torneo.getEstado());
-            ps.setInt(5, torneo.getId());
+            ps.setString(5, torneo.getRecompensa());
+            ps.setInt(6, torneo.getId());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -171,6 +173,7 @@ public class TorneoDAO {
         torneo.setFechaInicio(rs.getString("fecha_inicio"));
         torneo.setFechaFin(rs.getString("fecha_fin"));
         torneo.setEstado(rs.getString("estado"));
+        torneo.setRecompensa(rs.getString("recompensa"));
         return torneo;
     }
 }

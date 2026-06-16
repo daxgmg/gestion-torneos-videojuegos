@@ -99,7 +99,8 @@ CREATE TABLE dbo.torneos (
     fecha_inicio DATE          NOT NULL,
     fecha_fin    DATE          NOT NULL,
     estado       NVARCHAR(20)  NOT NULL DEFAULT 'ACTIVO'
-        CONSTRAINT CK_torneos_estado CHECK (estado IN ('ACTIVO', 'FINALIZADO'))
+        CONSTRAINT CK_torneos_estado CHECK (estado IN ('ACTIVO', 'FINALIZADO')),
+    recompensa   NVARCHAR(150) NULL
 );
 GO
 
